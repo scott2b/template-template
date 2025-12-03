@@ -1,0 +1,18 @@
+# copier.yml (root of template-template AND of every hybrid repo)
+_min_copier_version: "9.0.0"
+
+# Only use the contents of ./template when generating projects
+_subdirectory: template
+
+# Where to store answers in generated projects
+_answers_file: .copier-answers.yml
+
+project_name:
+  type: str
+  help: "Human-readable project name"
+  default: "Example project"
+
+project_slug:
+  type: str
+  help: "Import/package/directory name"
+  default: "{{ project_name|lower|replace(' ', '_') }}"

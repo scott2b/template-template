@@ -1,24 +1,22 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
 TEMP_DIR="$(mktemp -d)"
 
-# 1. Use template/ as the Copier template root
-copier copy \
-    --defaults \
-    template \
-    "$TEMP_DIR"
+# Use this repo as the Copier template; _subdirectory: template
+copier copy --defaults . "$TEMP_DIR"
 
-# 2. Remove everything at the root except what we want to keep
+# Remove everything in root except the template machinery & docs
 find . -mindepth 1 -maxdepth 1 \
-    ! -name ".git" \
-    ! -name ".gitignore" \
-    ! -name "template" \
-    ! -name "sync_root.sh" \
-    ! -name "DOCS.md" \
-    -exec rm -rf {} +
+  ! -name '.git' \
+  ! -name '.gitignore' \
+  ! -name 'copier.yml' \
+  ! -name 'template' \
+  ! -name 'sync_root.sh' \
+  ! -name 'DOCS.md' \
+  -exec rm -rf {} +
 
-# 3. Copy rendered project files into the root
+# Copy rendered project into root
 cp -R "$TEMP_DIR"/. .
 
-echo "Root synchronized from Copier template."
+echo "Root synchronized from template/"
