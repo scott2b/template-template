@@ -1,6 +1,12 @@
-_subdirectory: template
+# template/copier.yml
 _answers_file: copier-answers.yml
 
-template_name:
+project_name:
   type: str
-  help: Name of the template repository you want to generate
+  help: Human-readable project name
+  default: "Example Project"
+
+project_slug:
+  type: str
+  help: Slug used for directories, package names, etc.
+  default: "{{ project_name|lower|replace(' ', '-') }}"
